@@ -12,7 +12,7 @@ const sequelize = process.env.JAWSDB_URL
     // connect to the JawsDB database using the URL stored in the JAWSDB_URL environment variable
     new Sequelize(process.env.JAWSDB_URL)
   : // Otherwise, connect to the local MySQL database using the database name, username, and password stored
-    new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PW, {
+    new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
       host: "localhost",
       dialect: "mysql",
       dialectOptions: {
