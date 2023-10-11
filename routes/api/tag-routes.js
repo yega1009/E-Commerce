@@ -3,9 +3,9 @@ const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
 
+// GET route to find all tags with their products
 router.get("/", async (req, res) => {
-  // find all tags
-  // be sure to include its associated Product data
+  // Use sequelize to find all tags with their product data through the ProductTag join table
   try {
     const tags = await Tag.findAll({
       include: {
@@ -19,9 +19,8 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET route to find a tag by its ID with its products
 router.get("/:id", async (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
   try {
     const tag = await Tag.findByPk(req.params.id, {
       include: {
@@ -41,19 +40,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// POST route to create a new tag
 router.post("/", async (req, res) => {
-  // create a new tag
   try {
+    // Use Sequelize to create a new tag with the request body
     const newTag = await Tag.create(req.body);
+    // Send a successful response with the newly created tag data
     res.status(200).json(newTag);
   } catch (err) {
+    // Handle errors and send an error response
     res.status(400).json(err);
   }
 });
 
+// PUT route to update a tag's name by its ID
 router.put("/:id", async (req, res) => {
-  // update a tag's name by its `id` value
   try {
+    // Use Sequelize to update a tag's data where the ID matches the request parameters ID
     const updatedTag = await Tag.update(req.body, {
       where: { id: req.params.id },
     });
@@ -69,9 +72,10 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// DELETE route to delete a tag by its ID
 router.delete("/:id", async (req, res) => {
-  // delete on tag by its `id` value
   try {
+    // Use Sequelize to delete a tag where the ID matches the request parameters ID
     const deletedRows = await Tag.destroy({
       where: { id: req.params.id },
     });
